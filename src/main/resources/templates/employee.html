@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Employment System</title>
+
+<link rel="stylesheet" 
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+	crossorigin="anonymous">
+	
+	<script src="https://kit.fontawesome.com/986160be55.js" crossorigin="anonymous"></script>
+	
+	<style>
+		.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+		    color: #008CBA;
+		    background-color: #212529;
+		    font-weight: bold;
+		    border-bottom-color: #008CBA;
+		    border-bottom-style: solid;
+		    border-block-width: 2px;
+		    border-radius: inherit;
+		}
+		.card{
+			padding-left: 0px; 
+			padding-right: 0px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="px-3 py-2 bg-dark text-white">
+			<div class="container">
+		    	<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+		        	<a th:href="@{/employee}" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+						<h5>Employee Management System</h5>
+		          	</a>
+			        <ul class="d-flex nav col-12 col-lg my-2 justify-content-end my-md-0 text-small nav-pills">
+			        	<li class="nav-item">
+			            	<a th:href="@{/employee}" class="nav-link active">Employee List</a>
+			            </li>
+			           	<li>
+			              	<a th:href="@{/employee/newEmployee}" class="nav-link text-white">Add Employee</a>
+			            </li>
+			            <li>
+			              	<a th:href="@{/employee/compensationDetails/new}" class="nav-link text-white">Add Compensation</a>
+			            </li>
+			         </ul>
+		        </div>
+			</div>
+		</div>
+	</header>
+	<br>
+	
+	<div class ="container">
+		<div class = "d-flex justify-content-center">
+			<h1> List of Employees </h1>
+		</div>
+		<br>
+		<div>
+			<form th:action="@{/employees/search}" th:object="${filter}" method="POST">
+				<div class="row">
+					<div class="col-md-1 d-flex align-items-center adjust mt-1">
+						<label><h6 style="font-size: 16px">Filter by:</h6></label>
+					</div>
+					<div class="col-md-3 adjust">
+						<div class="form-floating">
+							<input type="text" name="firstName" id="floatingFN" th:value="${firstName}" class="form-control" placeholder="First name">
+						</div>
+					</div>
+				  	<div class="col-md-3 adjust">
+				  		<div class="form-floating">
+				   			<input type="text" name="lastName" id="floatingLN" th:value="${lastName}" class="form-control" placeholder="Last name">
+						</div>
+				  	</div>
+				  	<div class="col-md-3 adjust">
+				  		<div class="form-floating">
+				   			<input type="text" name="position" id="position" th:value="${position}" class="form-control" placeholder="Position">
+						</div>
+				  	</div>
+				  	<div class="col-md-2 d-grid gap-2 d-md-flex justify-content-md-end adjust">
+				  		<div class="d-flex justify-content-center ">
+				   			<button class="btn btn-primary me-md-2 mr-2" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+							<button  class="btn btn-secondary clear" type="button" onClick="window.location='/employees'"><i class="fa-solid fa-rotate-left"></i> Clear</button>
+				  		</div>
+				  	</div>
+				</div>
+			</form>
+		</div>
+		<br>
+		<table class = "table table-striped table-boarded">
+			<thead class = "table-dark text-center">
+					<th>ID</th>
+					<th>First Name</th>
+					<th>Middle Name</th>
+					<th>Last Name</th>
+					<th>Birth Date</th>
+					<th>Position</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each = "employee: ${employee}" class = "text-center table-hover"> 
+					<td th:text = "${employee.id}"></td>
+					<td th:text = "${employee.firstName}"></td>
+					<td th:text = "${employee.middleName}"></td>
+					<td th:text = "${employee.lastName}"></td>
+					<td th:text = "${employee.birthDate}"></td>
+					<td th:text = "${employee.position}"></td>
+					<td class "container">
+						<a th:href="@{/employee/edit/{id}(id=${employee.id})}" class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Update Employee">
+							<i class="fa-solid fa-pencil mr-2" style="font-size: 24px; color: rgb(0, 0, 64);"></i>
+						</a>
+						<a th:href="@{/employee/compensationDetails/{id}(id=${employee.id})}" class=" row btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Compensation">
+							<i class="fa-solid fa-envelope-open-text" style="font-size: 24px; color: rgb(0, 0, 64);"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="/index.js"></script>
+
+</body>
+</html>
